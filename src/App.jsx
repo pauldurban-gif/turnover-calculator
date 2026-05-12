@@ -199,16 +199,12 @@ const MULTIPLIER_LABELS = {
 };
 
 const VISIBLE_ITEMS = [
-  { label: "Job posting & advertising",     pct: 0.06, example: "LinkedIn, Indeed, sector job boards" },
-  { label: "HR & recruiting admin time",    pct: 0.08, example: "Screening, scheduling, offer letters" },
-  { label: "Reference & background checks", pct: 0.02, example: "Standard pre-hire process" },
+  { label: "Recruitment costs",       pct: 0.16, example: "Job postings, HR admin time, screening, background checks, and offer processing" },
+  { label: "Onboarding & training",   pct: 0.20, example: "Orientation, tools setup, training materials, and manager time bringing a new hire up to speed" },
 ];
 const INVISIBLE_ITEMS = [
-  { label: "Executive & manager time",      pct: 0.10, example: "60–80 hrs of leadership attention per departure: interviews, debriefs, re-onboarding" },
-  { label: "New-hire productivity ramp",    pct: 0.22, example: "New staff typically reach full productivity 6–12 months in; your team covers the gap" },
-  { label: "Remaining team drag",           pct: 0.16, example: "Colleagues absorb extra work, morale dips, and their own tenure risk rises" },
-  { label: "Institutional knowledge loss",  pct: 0.20, example: "Donor relationships, program context, undocumented processes. Irreplaceable." },
-  { label: "Onboarding & training",         pct: 0.16, example: "Orientation, tools setup, mentoring, training materials" },
+  { label: "Lost productivity",         pct: 0.40, example: "The new hire operates below full capacity for 6–12 months, while colleagues absorb the gap — both costs run simultaneously" },
+  { label: "Institutional knowledge",   pct: 0.24, example: "Donor relationships, program context, client history, and undocumented processes that leave when a person does" },
 ];
 
 // ─── Calculation ──────────────────────────────────────────────────────────────
@@ -462,27 +458,22 @@ function StaffSlider({ value, onChange }) {
       </div>
       <div style={{ position: "relative", padding: "0 4px" }}>
         <style>{`
-          input[type=range].staff-slider { -webkit-appearance: none; width: 100%; height: 6px; background: linear-gradient(to right, ${C.navy} 0%, ${C.navy} ${((n - 1) / 99) * 100}%, ${C.grayLight} ${((n - 1) / 99) * 100}%, ${C.grayLight} 100%); border-radius: 3px; outline: none; }
+          input[type=range].staff-slider { -webkit-appearance: none; width: 100%; height: 6px; background: linear-gradient(to right, ${C.navy} 0%, ${C.navy} ${((n - 1) / 49) * 100}%, ${C.grayLight} ${((n - 1) / 49) * 100}%, ${C.grayLight} 100%); border-radius: 3px; outline: none; }
           input[type=range].staff-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 38px; height: 26px; border-radius: 6px; background: ${C.navy} url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='26' viewBox='0 0 38 26'%3E%3Cpath d='M13 13 L17 8 M13 13 L17 18' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M25 13 L21 8 M25 13 L21 18' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") center/contain no-repeat; cursor: grab; box-shadow: 0 2px 6px rgba(0,30,70,0.30); border: 2px solid #fff; }
           input[type=range].staff-slider::-webkit-slider-thumb:active { cursor: grabbing; }
           input[type=range].staff-slider::-moz-range-thumb { width: 38px; height: 26px; border-radius: 6px; background: ${C.navy} url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='26' viewBox='0 0 38 26'%3E%3Cpath d='M13 13 L17 8 M13 13 L17 18' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M25 13 L21 8 M25 13 L21 18' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") center/contain no-repeat; cursor: grab; box-shadow: 0 2px 6px rgba(0,30,70,0.30); border: 2px solid #fff; }
         `}</style>
         <input
-          type="range" min="1" max="100" value={n}
+          type="range" min="1" max="50" value={n}
           className="staff-slider"
           onChange={e => onChange(Number(e.target.value))}
           style={{ width: "100%" }}
         />
         <div style={{ display: "flex", justifyContent: "space-between", marginTop: "8px" }}>
           <span style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", color: C.textFaint }}>1</span>
+          <span style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", color: C.textFaint }}>25</span>
           <span style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", color: C.textFaint }}>50</span>
-          <span style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", color: C.textFaint }}>100</span>
         </div>
-        {n === 100 && (
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: C.textMuted, lineHeight: 1.6, marginTop: "14px", textAlign: "center" }}>
-            This calculator is designed for organizations up to 100 staff. For larger organizations, results may underestimate true costs — <a href="https://filamentservices.org/contact" style={{ color: C.teal, textDecoration: "none", fontWeight: 600 }}>contact Filament</a> for a more tailored estimate.
-          </p>
-        )}
       </div>
     </div>
   );
@@ -673,8 +664,8 @@ function ResultScreen({ orgType, size, salary, departures, onReset }) {
       `  Cost per departure: $${costPerDeparture.toLocaleString()}`,
       ``,
       `COST BREAKDOWN`,
-      `  Costs you've probably counted:  $${visibleTotal.toLocaleString()}`,
-      `  Hidden costs no one tracks:     $${invisibleTotal.toLocaleString()}`,
+      `  The costs on your radar:      $${visibleTotal.toLocaleString()}`,
+      `  The costs hiding in plain sight: $${invisibleTotal.toLocaleString()}`,
       `  ─────────────────────────────────`,
       `  Total:                          $${total.toLocaleString()}`,
       ``,
@@ -766,7 +757,7 @@ function ResultScreen({ orgType, size, salary, departures, onReset }) {
           <div style={{ display: "flex", alignItems: "stretch", gap: "14px" }}>
             <div style={{ width: "4px", borderRadius: "2px", background: C.navy, flexShrink: 0 }} />
             <div>
-              <p style={{ fontFamily: "'Lora', serif", fontSize: "19px", fontWeight: 700, color: C.navy, lineHeight: 1.2, marginBottom: "4px" }}>Costs you've probably counted</p>
+              <p style={{ fontFamily: "'Lora', serif", fontSize: "19px", fontWeight: 700, color: C.navy, lineHeight: 1.2, marginBottom: "4px" }}>The costs on your radar</p>
               <p style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: C.textFaint, fontWeight: 400 }}>The line items that show up in a budget</p>
             </div>
           </div>
@@ -792,7 +783,7 @@ function ResultScreen({ orgType, size, salary, departures, onReset }) {
           <div style={{ display: "flex", alignItems: "stretch", gap: "14px" }}>
             <div style={{ width: "4px", borderRadius: "2px", background: C.teal, flexShrink: 0 }} />
             <div>
-              <p style={{ fontFamily: "'Lora', serif", fontSize: "19px", fontWeight: 700, color: C.navy, lineHeight: 1.2, marginBottom: "4px" }}>The costs no one tracks, but everyone feels</p>
+              <p style={{ fontFamily: "'Lora', serif", fontSize: "19px", fontWeight: 700, color: C.navy, lineHeight: 1.2, marginBottom: "4px" }}>The costs hiding in plain sight</p>
               <p style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: C.textFaint, fontWeight: 400 }}>These never appear on a single budget line</p>
             </div>
           </div>
@@ -846,7 +837,7 @@ function ResultScreen({ orgType, size, salary, departures, onReset }) {
       <div style={{ background: C.cardGrad, border: `1px solid ${C.border}`, borderRadius: "12px", boxShadow: C.shadowSm, padding: "20px 24px", marginBottom: "16px" }}>
         <SectionLabel text="The long view" />
         <p style={{ fontFamily: "'Lora', serif", fontSize: "18px", fontWeight: 700, color: C.navy, lineHeight: 1.3, marginBottom: "16px" }}>
-          If nothing changes, this cost doesn't stay flat — it compounds.
+          If nothing changes, this cost doesn't disappear — it repeats.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "10px", marginBottom: "14px" }}>
           {[
