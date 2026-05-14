@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 
-const FONTS = `
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,600;0,700;1,400;1,500&display=swap');
+const GLOBAL_STYLES = `
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,600;0,700;1,400;1,500&display=swap');
 `;
 
 // ─── Brand colors ─────────────────────────────────────────────────────────────
@@ -974,8 +975,7 @@ export default function App() {
   return (
     <>
       <style>{`
-        ${FONTS}
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        ${GLOBAL_STYLES}
         body { background: #ffffff; }
         button:focus-visible { outline: 2px solid ${C.teal}; outline-offset: 2px; }
         @media print {
@@ -1015,22 +1015,6 @@ export default function App() {
 
       <div style={{ minHeight: "100vh", background: "#ffffff", display: "flex", flexDirection: "column", alignItems: "center", padding: "0 20px 80px" }}>
 
-        {/* Page title */}
-        <div style={{ width: "100%", maxWidth: "660px", padding: "48px 0 0", marginBottom: "8px", textAlign: "center" }}>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: C.teal, marginBottom: "10px" }}>Filament Essential Services</p>
-          <h1 style={{ fontFamily: "'Lora', serif", fontSize: "clamp(28px, 6vw, 42px)", fontWeight: 700, color: C.navy, lineHeight: 1.2, letterSpacing: "-0.01em" }}>
-            HR Turnover Cost Calculator
-          </h1>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: "15px", color: C.textMuted, marginTop: "10px", lineHeight: 1.65, maxWidth: "500px", margin: "10px auto 0" }}>
-            Find out what staff turnover is actually costing your organization, including the costs that never show up on a budget line.
-          </p>
-          {!done && (
-            <p style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", fontWeight: 600, color: C.navy, marginTop: "14px", letterSpacing: "0.03em" }}>
-              4 questions &nbsp;·&nbsp; No research required &nbsp;·&nbsp; Results in under a minute
-            </p>
-          )}
-          <div style={{ width: "48px", height: "3px", background: `linear-gradient(90deg, ${C.navy}, ${C.teal})`, borderRadius: "2px", margin: "16px auto 0" }} />
-        </div>
 
         {/* Breadcrumb */}
         {!done && (
