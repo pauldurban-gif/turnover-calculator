@@ -10,5 +10,8 @@ export default defineConfig({
       fileName: () => 'turnover-calculator.js',
       formats: ['iife'],
     },
-  }
+    outDir: 'dist',
+    emptyOutDir: true,
+  },
+  publicDir: 'public',
 })
